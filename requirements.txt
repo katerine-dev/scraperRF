@@ -1,0 +1,3 @@
+psycopg2-binary #conexão com postgres
+beautifulsoup4 #scraper
+yoyo-migrations #migration
