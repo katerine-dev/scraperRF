@@ -1,17 +1,6 @@
 # scraperRF
 
 Estrutura do pacote:
-3 pastas - scraping, scraping-cli, scraping-api
-
-main.py = responsavel por executar os scrapers a partir de linha de comando
-Usar run.py para fazer função com argumentos (scraper, entry_point, results).
-
-scraping-cli e scraping-api não contem nenhum pacotes
-
-setup.py em todos os diretórios, tornando-os blibliotecas autônomas que podem
-ser empacotadas por conta próprias.
-.pgdata guarda informações do docker do postgres
----------
 
 site para scraper
 https://dadosabertos.rfb.gov.br/CNPJ/
@@ -56,4 +45,13 @@ docker stop <container-name>
 
 TODO
 - [] Mover configuração de banco da dados para variavel de ambiente
+- [] Quebrar a main em vários arquivos 
+- [] Tratar erros (try except)
+- [] Fazer função que insere estabelecimento no banco 
+
+PRÓXIMOS PASSOS
+
+
+Pergunta:
+O encoding do cvs de teste é ISO-8859-1, vale pena usar o pandas? ele tem alguma maneira de detectar o encoding? 
 
