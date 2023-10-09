@@ -1,27 +1,29 @@
-# scraperRF
+# ETL dos dados abertos da Receita Federal 
+- [Receita Federal Index](https://dadosabertos.rfb.gov.br/CNPJ/)
 
-Estrutura do pacote:
+Este projeto é uma extensão do trabalho realizado conjunto com a [ScoreEase](https://github.com/scoreease).
+O objetivo é extração de dados do [Cadastro Nacional de Pessoas Jurídicas (CNPJ)](lucoes.receita.fazenda.gov.br/servicos/cnpjreva/cnpjreva_solicitacao.asp).
+Mais especificamente, extrairemos as seguintes tabelas:
 
-site para scraper
-https://dadosabertos.rfb.gov.br/CNPJ/
+- CNAES
+- Empresas
+- Estabelecimentos
+- Motivos ? 
+- Municipios
+- Naturezas
+- Paises
+- QualificaçÕes
+- Simples
+- Socios
 
-Bibliotecas 
- psycopg2 = Conexão com o postgress
-
-Para usuário: 
-
-1* passo Ativando o virtual env
+Primeiro passo ativando o virtual env
 ```sh
 source venv/bin/activate
 ```
-Instalando projeto dependencias:
-
+Instalando as dependências do projeto:
 ```sh
 pip3 install -r requirements.txt
 ```
-
-Por que usar o docker: ele vai uniformizar o ambiente de desemvolvimento. (Sem diferença de sistema operacional)
-
 
 Comando para iniciar o serviço do postgres via docker:
 ```sh
@@ -36,10 +38,9 @@ docker run -d \
     -p 5432:5432 \
     postgres
 ```
-
 Parar o serviço do docker
 ```sh
-docker stop <container-name>
+docker stop <container-id>
 ```
 
 
@@ -47,10 +48,7 @@ TODO
 - [] Mover configuração de banco da dados para variavel de ambiente
 - [] Quebrar a main em vários arquivos 
 - [] Tratar erros (try except)
-- [] Fazer função que insere estabelecimento no banco 
-
-PRÓXIMOS PASSOS
-
+- [] Fazer função que insere estabelecimento no banco
 
 Pergunta:
 O encoding do cvs de teste é ISO-8859-1, vale pena usar o pandas? ele tem alguma maneira de detectar o encoding? 
