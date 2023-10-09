@@ -16,6 +16,8 @@ Mais especificamente, extrairemos as seguintes tabelas:
 - Simples
 - Socios
 
+### Venv
+
 Primeiro passo ativando o virtual env
 ```sh
 source venv/bin/activate
@@ -24,6 +26,7 @@ Instalando as dependências do projeto:
 ```sh
 pip3 install -r requirements.txt
 ```
+### Banco de dados
 
 Comando para iniciar o serviço do postgres via docker:
 ```sh
@@ -43,8 +46,23 @@ Parar o serviço do docker
 docker stop <container-id>
 ```
 
+### Migrations
 
-TODO
+Para criar uma nova migração:
+```sh
+yoyo new --sql
+```
+Para ver lista de migrations:
+```sh
+yoyo list 
+```
+Para executar as migrations:
+```sh
+yoyo apply
+```
+
+
+### TODO
 - [] Mover configuração de banco da dados para variavel de ambiente
 - [] Quebrar a main em vários arquivos 
 - [] Tratar erros (try except)
