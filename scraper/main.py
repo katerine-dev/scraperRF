@@ -69,7 +69,7 @@ def process_csv(csv_path, cur):
             create_endereco(dict_estabecimento["endereco"], cur)
 
 
-def conectar_postgresql():
+def conectar_banco():
     try:
         conn = psycopg.connect(
             "dbname=scraperDB host=localhost user=scraper password=scraper port=5432", autocommit=True
@@ -80,6 +80,35 @@ def conectar_postgresql():
 
 
 def create_endereco(dict_endereco, cur):
+    id = cur.execute(
+        """
+        INSERT INTO endereco (
+            tipo_logradouro, 
+            logradouro, 
+            numero_logradouro, 
+            complemento_logradouro, 
+            bairro, 
+            cep, 
+            uf, 
+            municipio
+        )
+        VALUES (
+            %(tipo_logradouro)s, 
+            %(logradouro)s, 
+            %(numero_logradouro)s, 
+            %(complemento_logradouro)s,
+            %(bairro)s,
+            %(cep)s,
+            %(uf)s,
+            %(municipio)s
+        )
+        RETURNING id;
+        """,
+        dict_endereco
+    )
+    return id
+
+def create_estabelecimento(dict_estabelecimento, cur):
     cur.execute(
         """
         INSERT INTO endereco (
@@ -103,9 +132,10 @@ def create_endereco(dict_endereco, cur):
             %(municipio)s
         )
         """,
-        dict_endereco
+        dict_estabelecimento
     )
-conexao = conectar_postgresql()
+
+conexao = conectar_banco()
 cur = conexao.cursor()
 # Faça o que precisa com o cursor e a conexão
 zip_file = fetch_file("https://dadosabertos.rfb.gov.br/CNPJ/Estabelecimentos8.zip")

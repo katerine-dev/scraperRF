@@ -113,6 +113,7 @@ file <nome_arquivo.extencao>
 - [ ] Deixar a função que lê csv mais genérica, para atender as outras tables 
 - [ ] Fazer o webscraping para pegar as outras tables (eu vi que as informações estão tabeladas)
 - [ ] Fazer os outros CREATE TABLES
+- As funções de CREATE precisam retornar o id
 
 ### Temas para estudo
 - [x] Docker
@@ -126,7 +127,7 @@ Questão de tempo de importar o csv para o postgres que podemos pensar:
 Um cvs de tamanho 328M demorou por volta de 50 minutos para rodar. (Referência minha máquina)
 - Será que vale a pena mudar o auto-commit na função de conexão com o banco de dados?
 - Será que vale a pena fazer rodar em disco em vez de uma pasta temporária?
-- 
+
 Talvez utilizando transactions ficará mais rápido sem mais modificações
 
 
