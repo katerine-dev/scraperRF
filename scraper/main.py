@@ -136,6 +136,7 @@ def create_estabelecimento(dict_estabelecimento, cur):
         dict_estabelecimento
     )
 
+
 conexao = conectar_banco()
 cur = conexao.cursor()
 # Faça o que precisa com o cursor e a conexão

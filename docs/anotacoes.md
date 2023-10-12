@@ -113,7 +113,7 @@ file <nome_arquivo.extencao>
 - [ ] Deixar a função que lê csv mais genérica, para atender as outras tables 
 - [ ] Fazer o webscraping para pegar as outras tables (eu vi que as informações estão tabeladas)
 - [ ] Fazer os outros CREATE TABLES
-- As funções de CREATE precisam retornar o id
+- [ ] As funções de CREATE precisam retornar o id
 
 ### Temas para estudo
 - [x] Docker
