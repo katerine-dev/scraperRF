@@ -4,13 +4,11 @@ Esse documento é para auxiliar o entendimento das tomadas de decisões.
 
 ## Por que Postgresql? 
 
-- não tem custo nas suas operações 
-- date_trunc or desc (substitui o select). 
-- DB relacional, conseguimos trabalhar com Json 
+- É OpenSource e pode ser utilizado comerciamente sem lincença
+- É um banco de dados DB relacional (SQL) maduro, utilizada por várias empresas de escala (Uber, por exemplo)
+- É suportado pelas maiorias de serviço de cloud
 - Enterprises: larga escala, com grandes proporções mercadológicas
-- Alta carga de transações online (Sistemas OTP) - Online Transactions Processing
-- Concurrency Control (controle de transações, controle de concorrência mais robusto)
-- Database size [unlimited](https://www.postgresql.org/docs/current/limits.html)
+- Tamanho da base de dados [ilimitado](https://www.postgresql.org/docs/current/limits.html)
 
 
 ## Configurando o ambiente virtual Python:
@@ -27,7 +25,7 @@ desenvolvimento de software, independentemente do tamanho do sistema criado." [B
 
 Passo a passo do docker:
 
-1) Como criar a container do postgres: https://hub.docker.com/_/postgres 
+1) Como executar o container do postgres: https://hub.docker.com/_/postgres 
 
 ``` sh
 docker run -d \
@@ -51,13 +49,14 @@ docker images
 
 ![docker-ps](../docs/imagens/docker-ps.png)
 
-3) Como parar o banco? 
+3) Como parar o seerviço do banco? 
 
 ```sh
 docker stop <container-id>
 ```
 Observações do DB: 
 Nome database: scraperDB
+
 Para cada index (Empresas, Estabelecimentos, Cnaes, Motivos, Municipios..) precisaremos dar um `CREATE TABLE` diferente,
 as colunas são diferentes entre elas.
 
@@ -73,13 +72,16 @@ Primeiro instalar yoyo migrations, uma biblioteca de migration:
 Yoyo permite escrever scripts de migração em SQL bruto ou Python contendo instruções SQL para migrar 
 seu esquema de banco de dados para uma nova versão.
 
-## Uso de dicionários para referenciar a tabela 
+## Uso de dicionários
 
 Uso de dicionários em python:
 
 Forma de coleção de dados em que se guarda uma chave e um valor correspondente. 
 
 ![dicionario](../docs/imagens/dicionario.png)
+
+No momento estamos usando o dicionário para representar as entidades do sistema.
+Também nossas funções de banco de dados receber e retornam dicionários.
 
 ## IDE para visualização da database
 
@@ -93,7 +95,7 @@ Por linha de comando shell:
 
 1) Vá até o diretório que está o arquivo
 2) Utiliza o comando `ls` para visualizar as pastas disponíveis nesse diretório
-3) Utilize o comando file:
+3) Utilize o comando `file`:
 ```sh
 file <nome_arquivo.extencao>
 ```
@@ -116,7 +118,7 @@ file <nome_arquivo.extencao>
 - [x] Docker
 - [x] Migrations
 - [ ] Debug em python
-- [ ] Performing Transactions
+- [ ] SQL Transactions
 
 
 ### Tempo de carregamento
@@ -124,12 +126,15 @@ Questão de tempo de importar o csv para o postgres que podemos pensar:
 Um cvs de tamanho 328M demorou por volta de 50 minutos para rodar. (Referência minha máquina)
 - Será que vale a pena mudar o auto-commit na função de conexão com o banco de dados?
 - Será que vale a pena fazer rodar em disco em vez de uma pasta temporária?
+- 
 Talvez utilizando transactions ficará mais rápido sem mais modificações
 
 
 ## Mais referências que eu utilizei para o código
 
 [Manipulando dados em postgresql](https://dadosaocubo.com/manipulando-dados-em-postgresql-com-python/) acesso em 01/10/2023
-[Solução de problemas com o pacote psycopg3](https://stackoverflow.com/questions/75534231/how-can-i-connect-to-remote-database-using-psycopg3)
-[Documentação](https://www.psycopg.org/psycopg3/docs/basic/params.html)
+
+[Solução de problemas com o pacote psycopg3](https://stackoverflow.com/questions/75534231/how-can-i-connect-to-remote-database-using-psycopg3) acesso em 12/10/2023
+
+[Documentação](https://www.psycopg.org/psycopg3/docs/basic/params.html) acesso em 12/10/2023
 
