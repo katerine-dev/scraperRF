@@ -61,13 +61,7 @@ Para executar as migrations:
 yoyo apply
 ```
 
+Todas tabelas estão descritas no documento em pdf na pasta .docs
 
-### TODO
-- [] Mover configuração de banco da dados para variavel de ambiente
-- [] Quebrar a main em vários arquivos 
-- [] Tratar erros (try except)
-- [] Fazer função que insere estabelecimento no banco
 
-Pergunta:
-O encoding do cvs de teste é ISO-8859-1, vale pena usar o pandas? ele tem alguma maneira de detectar o encoding? 
 
