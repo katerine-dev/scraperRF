@@ -108,6 +108,7 @@ def create_endereco(dict_endereco, cur):
     )
     return id
 
+
 def create_estabelecimento(dict_estabelecimento, cur):
     cur.execute(
         """
