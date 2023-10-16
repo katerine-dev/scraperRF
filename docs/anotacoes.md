@@ -102,6 +102,7 @@ file <nome_arquivo.extencao>
 ![shell](../docs/imagens/shell.png)
 
 ### TODO
+- [ ] Fazer estrutura de banco de dados!! 
 - [x] Criar um ambiente virtual env
 - [ ] Mover configuração de banco da dados para variável de ambiente (informaçÕes de senha, usúario, host, porta...)
 - [ ] Quebrar a main em vários arquivos 
