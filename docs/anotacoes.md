@@ -122,6 +122,7 @@ file <nome_arquivo.extencao>
 - [x] Migrations
 - [ ] Debug em python
 - [ ] SQL Transactions
+- [ ] Tabela espelho (para criar histórico de informações)
 
 
 ### Tempo de carregamento
