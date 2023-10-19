@@ -4,7 +4,7 @@ import zipfile
 import os
 import csv
 import psycopg
-import chardet
+import chardet  # sempre lmebrar de colocar
 
 # Função para pegar um arquivo
 
@@ -71,11 +71,11 @@ def process_csv(csv_path, cur):
 
 
 def get_encoding(file_path):
-  with open(file_path, 'rb') as f: # Abre o arquivos especificado em modo binária
-    lines = f.readlines()[:250] # Lê as primeras 100 linhas do arquivo
-    encoding = chardet.detect(b''.join(lines))['encoding'] # Detecta o encoding do arquivo
-    print("encoding detectado:", encoding)
-    return encoding
+    with open(file_path, 'rb') as f:  # Abre o arquivos especificado em modo binária
+        lines = f.readlines()[:250]  # Lê as primeras 100 linhas do arquivo, (por que?)
+        encoding = chardet.detect(b''.join(lines))['encoding']  # Detecta o encoding do arquivo
+        print("encoding detectado:", encoding)
+        return encoding  # precisa chamar ela ainda
 
 
 def conectar_banco():
