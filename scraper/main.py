@@ -4,6 +4,7 @@ import zipfile
 import os
 import csv
 import psycopg
+import chardet
 
 # Função para pegar um arquivo
 
@@ -69,6 +70,14 @@ def process_csv(csv_path, cur):
             create_endereco(dict_estabecimento["endereco"], cur)
 
 
+def get_encoding(file_path):
+  with open(file_path, 'rb') as f: # Abre o arquivos especificado em modo binária
+    lines = f.readlines()[:250] # Lê as primeras 100 linhas do arquivo
+    encoding = chardet.detect(b''.join(lines))['encoding'] # Detecta o encoding do arquivo
+    print("encoding detectado:", encoding)
+    return encoding
+
+
 def conectar_banco():
     try:
         conn = psycopg.connect(
@@ -79,7 +88,16 @@ def conectar_banco():
         print(f"Erro na conexão com o PostgreSQL: {e}")
 
 
+# Função responsável por trocar o byte Nul por '' dentro de um valor do dicionário dict_endereco
+def remove_null_bytes(dict_endereco):
+    for key, value in dict_endereco.items():
+        if isinstance(value, str):
+            dict_endereco[key] = value.replace('\x00', '')
+    return dict_endereco
+
+
 def create_endereco(dict_endereco, cur):
+    dict_endereco = remove_null_bytes(dict_endereco)
     id = cur.execute(
         """
         INSERT INTO endereco (
