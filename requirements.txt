@@ -3,3 +3,4 @@ beautifulsoup4 #scraper
 yoyo-migrations #migration
 requests #cliente http
 chardet #encoding
+python-dotenv==1.0.0 # variaveis de ambiente

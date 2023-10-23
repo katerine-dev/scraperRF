@@ -5,6 +5,15 @@ import os
 import csv
 import psycopg
 import chardet  # sempre lmebrar de colocar
+from dotenv import load_dotenv
+
+load_dotenv()
+
+PG_HOST = os.getenv('PG_HOST')
+PG_DATABASE = os.getenv('PG_DATABASE')
+PG_USER = os.getenv('PG_USER')
+PG_PASSWORD = os.getenv('PG_PASSWORD')
+PG_PORT = os.getenv('PG_PORT')
 
 # Função para pegar um arquivo
 
@@ -13,12 +22,14 @@ def fetch_file(url):
     response = requests.get(url)  # faz um request http do método get
     temp_file = tempfile.NamedTemporaryFile()  # criar um arquivo temporário
     temp_file.write(response.content)
+    print("Arquivo temporário criado:", temp_file.name)
     return temp_file
 
 
 def extract_zipfile(file, destination_path):
     zip_file = zipfile.ZipFile(file)  # instanciando um objeto da classe ZipFile
     zip_file.extractall(destination_path)  # caminho para pasta temporária
+    print("Arquivo ZIP extraído para:", destination_path)
 
 
 nome_situacao_cadastral = {  # dicionário para referenciar o nome da situação cadastral no código informado pela tabela
@@ -32,6 +43,7 @@ nome_situacao_cadastral = {  # dicionário para referenciar o nome da situação
 
 
 def process_csv(csv_path, cur):
+    print("Iniciando processamento do arquivo CSV:", csv_path)
     with open(csv_path, 'r', encoding='ISO-8859-1') as csv_file:
         reader = csv.reader(csv_file, delimiter=";")
         for row in reader:
@@ -81,11 +93,14 @@ def get_encoding(file_path):
 def conectar_banco():
     try:
         conn = psycopg.connect(
-            "dbname=scraperDB host=localhost user=scraper password=scraper port=5432", autocommit=True
+            # ref: remova o comentário, e comente a linha subsequente se deseja rodar local
+            #"dbname=scraperDB host=localhost user=scraper password=scraper port=5432", autocommit=True,
+            f"dbname={PG_DATABASE} host={PG_HOST} user={PG_USER} password={PG_PASSWORD} port={PG_PORT}", autocommit=True
         )
         return conn
     except Exception as e:
         print(f"Erro na conexão com o PostgreSQL: {e}")
+        return None  # Retorna None em caso de erro de conexão
 
 
 # Função responsável por trocar o byte Nul por '' dentro de um valor do dicionário dict_endereco
@@ -124,7 +139,7 @@ def create_endereco(dict_endereco, cur):
         """,
         dict_endereco
     )
-    return id
+    return id, print("Endereço inserido no banco de dados, ID:", id)  # Debug: Imprime o ID inserido no banco
 
 
 def create_estabelecimento(dict_estabelecimento, cur):
@@ -156,16 +171,22 @@ def create_estabelecimento(dict_estabelecimento, cur):
 
 
 conexao = conectar_banco()
-cur = conexao.cursor()
-# Faça o que precisa com o cursor e a conexão
-zip_file = fetch_file("https://dadosabertos.rfb.gov.br/CNPJ/Estabelecimentos8.zip")
-temp_dir = tempfile.TemporaryDirectory()  # criando uma pasta temporária
-extract_zipfile(zip_file, temp_dir.name)  # extraindo para um diretório temporátio
-zip_file.close()  # ao fechar um arquivo temporário ele é automaticamente deletado
+if conexao is not None:
+    print("Conexão com o banco de dados estabelecida.")  # Debug: Imprime que a conexão foi bem-sucedida
+    cur = conexao.cursor()
+    # Faça o que precisa com o cursor e a conexão
+    zip_file = fetch_file("https://dadosabertos.rfb.gov.br/CNPJ/Estabelecimentos8.zip")
+    temp_dir = tempfile.TemporaryDirectory()
+    extract_zipfile(zip_file, temp_dir.name)
+    zip_file.close()  # ao fechar um arquivo temporário ele é automaticamente deletado
 
-csv_name = os.listdir(temp_dir.name)[0]  # pegando o nome do csv
-csv_path = os.path.join(temp_dir.name, csv_name)  # invés de concatenar strings, vou usar o path.join
+    csv_name = os.listdir(temp_dir.name)[0]  # pegando o nome do csv
+    csv_path = os.path.join(temp_dir.name, csv_name)  # invés de concatenar strings, vou usar o path.join
 
-process_csv(csv_path, cur)
-conexao.commit()
-temp_dir.cleanup()  # limpa o diretorio temporario e apaga todos os csvs
+    process_csv(csv_path, cur)
+    conexao.commit()
+    temp_dir.cleanup()  # limpa o diretório temporário e apaga todos os csvs
+else:
+    print("A conexão com o banco de dados não pôde ser estabelecida.")
+
+print("Processo concluído.")  # Debug: Imprime uma mensagem ao final do processo
