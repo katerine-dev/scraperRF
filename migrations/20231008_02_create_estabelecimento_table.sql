@@ -29,4 +29,3 @@ CREATE TABLE estabelecimento (
    situacao_especial                TEXT,
    data_situacao_especial           DATE
 );
-

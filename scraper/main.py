@@ -171,22 +171,16 @@ def create_estabelecimento(dict_estabelecimento, cur):
 
 
 conexao = conectar_banco()
-if conexao is not None:
-    print("Conexão com o banco de dados estabelecida.")  # Debug: Imprime que a conexão foi bem-sucedida
-    cur = conexao.cursor()
-    # Faça o que precisa com o cursor e a conexão
-    zip_file = fetch_file("https://dadosabertos.rfb.gov.br/CNPJ/Estabelecimentos8.zip")
-    temp_dir = tempfile.TemporaryDirectory()
-    extract_zipfile(zip_file, temp_dir.name)
-    zip_file.close()  # ao fechar um arquivo temporário ele é automaticamente deletado
+cur = conexao.cursor()
+# Faça o que precisa com o cursor e a conexão
+zip_file = fetch_file("https://dadosabertos.rfb.gov.br/CNPJ/Estabelecimentos8.zip")
+temp_dir = tempfile.TemporaryDirectory()  # criando uma pasta temporária
+extract_zipfile(zip_file, temp_dir.name)  # extraindo para um diretório temporátio
+zip_file.close()  # ao fechar um arquivo temporário ele é automaticamente deletado
 
-    csv_name = os.listdir(temp_dir.name)[0]  # pegando o nome do csv
-    csv_path = os.path.join(temp_dir.name, csv_name)  # invés de concatenar strings, vou usar o path.join
+csv_name = os.listdir(temp_dir.name)[0]  # pegando o nome do csv
+csv_path = os.path.join(temp_dir.name, csv_name)  # invés de concatenar strings, vou usar o path.join
 
-    process_csv(csv_path, cur)
-    conexao.commit()
-    temp_dir.cleanup()  # limpa o diretório temporário e apaga todos os csvs
-else:
-    print("A conexão com o banco de dados não pôde ser estabelecida.")
-
-print("Processo concluído.")  # Debug: Imprime uma mensagem ao final do processo
+process_csv(csv_path, cur)
+conexao.commit()
+temp_dir.cleanup()  # limpa o diretorio temporario e apaga todos os csvs
