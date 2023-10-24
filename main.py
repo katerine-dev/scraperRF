@@ -22,14 +22,12 @@ def fetch_file(url):
     response = requests.get(url)  # faz um request http do método get
     temp_file = tempfile.NamedTemporaryFile()  # criar um arquivo temporário
     temp_file.write(response.content)
-    print("Arquivo temporário criado:", temp_file.name)
     return temp_file
 
 
 def extract_zipfile(file, destination_path):
     zip_file = zipfile.ZipFile(file)  # instanciando um objeto da classe ZipFile
     zip_file.extractall(destination_path)  # caminho para pasta temporária
-    print("Arquivo ZIP extraído para:", destination_path)
 
 
 nome_situacao_cadastral = {  # dicionário para referenciar o nome da situação cadastral no código informado pela tabela
@@ -43,7 +41,6 @@ nome_situacao_cadastral = {  # dicionário para referenciar o nome da situação
 
 
 def process_csv(csv_path, cur):
-    print("Iniciando processamento do arquivo CSV:", csv_path)
     with open(csv_path, 'r', encoding='ISO-8859-1') as csv_file:
         reader = csv.reader(csv_file, delimiter=";")
         for row in reader:
@@ -139,7 +136,7 @@ def create_endereco(dict_endereco, cur):
         """,
         dict_endereco
     )
-    return id, print("Endereço inserido no banco de dados, ID:", id)  # Debug: Imprime o ID inserido no banco
+    return id
 
 
 def create_estabelecimento(dict_estabelecimento, cur):
