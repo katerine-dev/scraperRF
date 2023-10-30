@@ -16,7 +16,9 @@ nome_situacao_cadastral = {  # dicionário para referenciar o nome da situação
 }
 # TODO tornar função genérico (qualquer csv)
 
+
 def process_csv(csv_path, cur):
+    print("Incluindo informações no Banco de Dados... aguarde!")
     with open(csv_path, 'r', encoding='ISO-8859-1') as csv_file:
         reader = csv.reader(csv_file, delimiter=";")
         for row in reader:
@@ -47,12 +49,14 @@ def process_csv(csv_path, cur):
                 "telefone_1": row[22],
                 "ddd_telefone_2": row[23],
                 "telefone_2": row[24],
-                "fax_numero": row[25],
-                "email": row[26],
-                "situacao_especial": row[27],
-                "data_situacao_especial": row[28],
+                "ddd_fax": row[25],
+                "fax_numero": row[26],
+                "email": row[27],
+                "situacao_especial": row[28],
+                "data_situacao_especial": row[29]
             }
-            db.endereco.create_endereco(dict_estabecimento["endereco"], cur)
+            dict_estabecimento["id_endereco"] = db.endereco.create_endereco(dict_estabecimento["endereco"], cur)
+            db.estabelecimento.create_estabelecimento(dict_estabecimento, cur)
 
 
 conexao = db.conexao.conectar_banco()

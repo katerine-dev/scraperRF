@@ -116,6 +116,7 @@ file <nome_arquivo.extencao>
 - [ ] Fazer os outros CREATE TABLES
 - [ ] As funções de CREATE precisam retornar o id
 - [ ] Fazer em orientação a objeto
+- [ ] Suporte para CLI
 
 ### Temas para estudo
 - [x] Docker

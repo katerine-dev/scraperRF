@@ -1,5 +1,5 @@
 def create_endereco(dict_endereco, cur):
-    id = cur.execute(
+    cur.execute(
         """
         INSERT INTO endereco (
             tipo_logradouro, 
@@ -25,4 +25,5 @@ def create_endereco(dict_endereco, cur):
         """,
         dict_endereco
     )
+    id = cur.fetchone()[0]
     return id
