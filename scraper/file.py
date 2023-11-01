@@ -27,8 +27,8 @@ def get_encoding(file_path):
 
 
 # Função responsável por trocar o byte Nul por '' dentro de um valor do dicionário dict_endereco
-def remove_null_bytes(dict_endereco):
-    for key, value in dict_endereco.items():
-        if isinstance(value, str):
-            dict_endereco[key] = value.replace('\x00', '')
-    return dict_endereco
+#def remove_null_bytes(tabela_dict):
+#    for key, value in tabela_dict.items():
+#        if isinstance(value, str):
+#            tabela_dict[key] = value.replace('\x00', '')
+#    return tabela_dict

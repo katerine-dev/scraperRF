@@ -1,12 +1,12 @@
 from datetime import datetime
-codigo_tipo_estabelecimento = {   # dicionário para referenciar o nome da situação cadastral no código informado pela tabela
+codigo_tipo_estabelecimento = {   # dicionário para referenciar o tipo de estabelecimento informado pela tabela
     "1": "matriz",
     "2": "filial"
 }
 
 
 def normalize_date(data):
-    if data != "":
+    if data != "" and data != "0":  # corrige vazios e caracteres não aceitos para conversão da data
         return datetime.strptime(data, '%Y%m%d').date()
     else:
         return None

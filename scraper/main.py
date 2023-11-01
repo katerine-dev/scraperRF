@@ -20,9 +20,9 @@ nome_situacao_cadastral = {  # dicionário para referenciar o nome da situação
 def process_csv(csv_path, cur):
     print("Incluindo informações no Banco de Dados... aguarde!")
     with open(csv_path, 'r', encoding='ISO-8859-1') as csv_file:
-        reader = csv.reader(csv_file, delimiter=";")
+        reader = csv.reader((row.replace('\0', '') for row in csv_file), delimiter=";") # trocar o byte Nul por '' dentro de um valor do dicionário
         for row in reader:
-            dict_estabecimento = {
+            dict_estabelecimento = {
                 "cnpj": row[0] + row[1] + row[2],
                 "tipo_estabelecimento": row[3],
                 "nome_fantasia": row[4],
@@ -55,8 +55,10 @@ def process_csv(csv_path, cur):
                 "situacao_especial": row[28],
                 "data_situacao_especial": row[29]
             }
-            dict_estabecimento["id_endereco"] = db.endereco.create_endereco(dict_estabecimento["endereco"], cur)
-            db.estabelecimento.create_estabelecimento(dict_estabecimento, cur)
+            #file.remove_null_bytes(dict_estabelecimento)  # Corrige line contains NUL
+            #file.remove_null_bytes(dict_estabelecimento["endereco"])
+            dict_estabelecimento["id_endereco"] = db.endereco.create_endereco(dict_estabelecimento["endereco"], cur)
+            db.estabelecimento.create_estabelecimento(dict_estabelecimento, cur)
 
 
 conexao = db.conexao.conectar_banco()
