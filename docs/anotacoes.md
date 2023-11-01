@@ -104,9 +104,7 @@ file <nome_arquivo.extencao>
 ### TODO
 - [x] Fazer estrutura de banco de dados
 - [x] Criar um ambiente virtual env
-- [ ] Mover configuração de banco da dados para variável de ambiente (informações de senha, usúario, host, porta...)
-- [x] Quebrar a main em vários arquivos 
-- [ ] Tratar erros (try except, implementar transactions)
+- [x] Quebrar a main em vários arquivos
 - [x] Fazer função que insere endereco no banco
 - [x] Fazer função que insere estabelecimento no banco
 - [x] Fazer o enconding do csv ser autodetectado
@@ -117,12 +115,22 @@ file <nome_arquivo.extencao>
 - [x] As funções de CREATE precisam retornar o id
 - [ ] Fazer em orientação a objeto
 - [ ] Suporte para CLI
+- [ ] Tratar erros (try except, implementar transactions)
+- [ ] Mover configuração de banco da dados para variável de ambiente (informações de senha, usúario, host, porta...)
+
+#### TODO PARA AMANHÃ
+- [ ] Transactions
+- [ ] fazer o scraper
+- [ ] fazer a função rodar para todos os estabelecimentos
+- [ ] fazer a generalização da função process_csv
+
 
 ### Temas para estudo
 - [x] Docker
 - [x] Migrations
 - [ ] Debug em python
 - [ ] SQL Transactions
+Preciso colocar a create endereco e estabelecimento na mesma transacao
 - [ ] Tabela espelho (para criar histórico de informações)
 
 
