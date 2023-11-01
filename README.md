@@ -12,7 +12,7 @@ Mais especificamente, extrairemos as seguintes tabelas:
 - Municipios
 - Naturezas
 - Paises
-- QualificaçÕes
+- Qualificações
 - Simples
 - Socios
 
