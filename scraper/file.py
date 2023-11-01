@@ -27,6 +27,7 @@ def get_encoding(file_path):
 
 
 # Função responsável por trocar o byte Nul por '' dentro de um valor do dicionário dict_endereco
+# Não precisou pq eu inclui a solução diretamente no reader
 #def remove_null_bytes(tabela_dict):
 #    for key, value in tabela_dict.items():
 #        if isinstance(value, str):
