@@ -1,20 +1,23 @@
 from datetime import datetime
-codigo_tipo_estabelecimento = {  # dicionário para referenciar o nome da situação cadastral no código informado pela tabela
+codigo_tipo_estabelecimento = {   # dicionário para referenciar o nome da situação cadastral no código informado pela tabela
     "1": "matriz",
     "2": "filial"
 }
 
 
-def normalize_date(data_situacao_cadastral):
-    data_situacao_cadastral_convertida = datetime.strptime(data_situacao_cadastral, '%Y%m%d').date()
-    return data_situacao_cadastral_convertida
+def normalize_date(data):
+    if data != "":
+        return datetime.strptime(data, '%Y%m%d').date()
+    else:
+        return None
 
 
 def create_estabelecimento(dict_estabelecimento, cur):
     dict_estabelecimento['tipo_estabelecimento'] = codigo_tipo_estabelecimento[dict_estabelecimento['tipo_estabelecimento']]
+    dict_estabelecimento['data_situacao_cadastral'] = normalize_date(dict_estabelecimento['data_situacao_cadastral'])
+    dict_estabelecimento['data_inicio_atividade'] = normalize_date(dict_estabelecimento['data_inicio_atividade'])
+    dict_estabelecimento['data_situacao_especial'] = normalize_date(dict_estabelecimento['data_situacao_especial'])
 
-    if dict_estabelecimento['data_situacao_cadastral'] != "":
-        dict_estabelecimento['data_situacao_cadastral'] = normalize_date(dict_estabelecimento['data_situacao_cadastral'])
     cur.execute(
         """
         INSERT INTO estabelecimento (
