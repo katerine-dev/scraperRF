@@ -1,4 +1,4 @@
 CREATE TABLE natureza_juridica (
-   codigo    TEXT,
+   codigo    TEXT PRIMARY KEY,
    descricao TEXT
 );

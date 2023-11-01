@@ -1,5 +1,5 @@
-CREATE TYPE TIPO_OPCAO_SIMPLES AS ENUM('sim', 'nao', 'vazio');
-CREATE TYPE TIPO_OPCAO_MEI AS ENUM('sim', 'nao', 'vazio');
+CREATE TYPE TIPO_OPCAO_SIMPLES AS ENUM('sim', 'nao');
+CREATE TYPE TIPO_OPCAO_MEI AS ENUM('sim', 'nao');
 
 CREATE TABLE simples (
    id                    SERIAL PRIMARY KEY,

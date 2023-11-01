@@ -105,7 +105,7 @@ file <nome_arquivo.extencao>
 - [x] Fazer estrutura de banco de dados
 - [x] Criar um ambiente virtual env
 - [ ] Mover configuração de banco da dados para variável de ambiente (informações de senha, usúario, host, porta...)
-- [ ] Quebrar a main em vários arquivos 
+- [x] Quebrar a main em vários arquivos 
 - [ ] Tratar erros (try except, implementar transactions)
 - [x] Fazer função que insere endereco no banco
 - [x] Fazer função que insere estabelecimento no banco
@@ -113,8 +113,8 @@ file <nome_arquivo.extencao>
 - [x] Criar conexão com o banco de dados python -> postgresql
 - [ ] Deixar a função que lê csv mais genérica, para atender as outras tables 
 - [ ] Fazer o webscraping para pegar as outras tables (eu vi que as informações estão tabeladas)
-- [ ] Fazer os outros CREATE TABLES
-- [ ] As funções de CREATE precisam retornar o id
+- [x] Fazer os outros CREATE TABLES
+- [x] As funções de CREATE precisam retornar o id
 - [ ] Fazer em orientação a objeto
 - [ ] Suporte para CLI
 

@@ -1,4 +1,4 @@
 CREATE TABLE qualificacao_socio (
-   codigo    TEXT,
+   codigo    TEXT PRIMARY KEY,
    descricao TEXT
 );

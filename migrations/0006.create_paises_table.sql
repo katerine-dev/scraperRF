@@ -1,4 +1,4 @@
 CREATE TABLE paises (
-   codigo    TEXT,
+   codigo    TEXT PRIMARY KEY,
    descricao TEXT
 );

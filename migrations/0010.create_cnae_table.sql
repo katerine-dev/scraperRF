@@ -1,4 +1,4 @@
 CREATE TABLE cnae (
-   codigo    TEXT,
+   codigo    TEXT PRIMARY KEY,
    descricao TEXT
 );

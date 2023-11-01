@@ -1,4 +1,4 @@
 CREATE TABLE municipio (
-   codigo    TEXT,
+   codigo    TEXT PRIMARY KEY,
    descricao TEXT
 );
