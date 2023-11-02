@@ -6,7 +6,6 @@ import os
 import csv
 import tempfile
 
-
 nome_situacao_cadastral = {  # dicionário para referenciar o nome da situação cadastral no código informado pela tabela
     "01": "NULA",
     "02": "ATIVA",
@@ -17,7 +16,7 @@ nome_situacao_cadastral = {  # dicionário para referenciar o nome da situação
 # TODO tornar função genérico (qualquer csv)
 
 
-def process_csv(csv_path, cur):
+def process_csv(csv_path, conexao):
     print("Incluindo informações no Banco de Dados... aguarde!")
     with open(csv_path, 'r', encoding='ISO-8859-1') as csv_file:
         reader = csv.reader((row.replace('\0', '') for row in csv_file), delimiter=";") # trocar o byte Nul por '' dentro de um valor do dicionário
@@ -57,8 +56,10 @@ def process_csv(csv_path, cur):
             }
             #file.remove_null_bytes(dict_estabelecimento)  # Corrige line contains NUL
             #file.remove_null_bytes(dict_estabelecimento["endereco"])
-            dict_estabelecimento["id_endereco"] = db.endereco.create_endereco(dict_estabelecimento["endereco"], cur)
-            db.estabelecimento.create_estabelecimento(dict_estabelecimento, cur)
+            with conexao.transactions():
+                dict_estabelecimento["id_endereco"] = db.endereco.create_endereco(dict_estabelecimento["endereco"], cur)
+                # raise Exception("Erro forçado!") # Verificando se realmente tem rollback
+                db.estabelecimento.create_estabelecimento(dict_estabelecimento, cur)
 
 
 conexao = db.conexao.conectar_banco()
@@ -72,6 +73,6 @@ zip_file.close()  # ao fechar um arquivo temporário ele é automaticamente dele
 csv_name = os.listdir(temp_dir.name)[0]  # pegando o nome do csv
 csv_path = os.path.join(temp_dir.name, csv_name)  # invés de concatenar strings, vou usar o path.join
 
-process_csv(csv_path, cur)
+process_csv(csv_path, conexao)
 conexao.commit()
 temp_dir.cleanup()  # limpa o diretorio temporario e apaga todos os csvs
