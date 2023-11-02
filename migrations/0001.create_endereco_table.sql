@@ -1,6 +1,3 @@
---
--- depends:
-
 CREATE TABLE endereco (
    id                     SERIAL PRIMARY KEY,
    tipo_logradouro        TEXT,

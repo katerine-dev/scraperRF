@@ -19,7 +19,7 @@ python3 -m venv venv
 
 ## Por que usamos o docker? 
 
-Por que usar o docker: ele vai uniformizar o ambiente de desenvolvimento. (Sem diferença de sistema operacional)
+Porque usar o docker: ele vai uniformizar o ambiente de desenvolvimento. (Sem diferença de sistema operacional)
 "Em resumo, rodar aplicações no Docker permite a criação de ambientes controlados para extrair o máximo do 
 desenvolvimento de software, independentemente do tamanho do sistema criado." [Blog logap](https://logap.com.br/blog/o-que-e-docker/#:~:text=A%20grande%20diferen%C3%A7a%20%E2%80%94%20e%20vantagem,bem%20popular%20nos%20dias%20atuais.)
 
@@ -101,28 +101,47 @@ file <nome_arquivo.extencao>
 ```
 ![shell](../docs/imagens/shell.png)
 
+
+## Transactions em SQL
+
+Um grupo de comandos que alteram os dados armazenados em um banco de dados e uma transação é 
+tratada como uma única unidade, portanto esta transação basicamente garante que todos esses comandos sejam executados 
+com sucesso ou nenhum deles. Elas garantem a integridade do banco de dados. 
+
+## Cloud 
+
+Google cloud, Azure, AWS. 
+
 ### TODO
 - [x] Fazer estrutura de banco de dados
 - [x] Criar um ambiente virtual env
-- [ ] Mover configuração de banco da dados para variável de ambiente (informações de senha, usúario, host, porta...)
-- [ ] Quebrar a main em vários arquivos 
-- [ ] Tratar erros (try except, implementar transactions)
+- [x] Quebrar a main em vários arquivos
 - [x] Fazer função que insere endereco no banco
 - [x] Fazer função que insere estabelecimento no banco
 - [x] Fazer o enconding do csv ser autodetectado
 - [x] Criar conexão com o banco de dados python -> postgresql
 - [ ] Deixar a função que lê csv mais genérica, para atender as outras tables 
 - [ ] Fazer o webscraping para pegar as outras tables (eu vi que as informações estão tabeladas)
-- [ ] Fazer os outros CREATE TABLES
-- [ ] As funções de CREATE precisam retornar o id
+- [x] Fazer os outros CREATE TABLES
+- [x] As funções de CREATE precisam retornar o id
 - [ ] Fazer em orientação a objeto
 - [ ] Suporte para CLI
+- [ ] Tratar erros (try except, implementar transactions)
+- [ ] Mover configuração de banco da dados para variável de ambiente (informações de senha, usúario, host, porta...)
+
+#### TODO PARA AMANHÃ
+- [x] Transactions
+- [ ] fazer o scraper
+- [ ] fazer a função rodar para todos os estabelecimentos
+- [ ] fazer a generalização da função process_csv
+
 
 ### Temas para estudo
 - [x] Docker
 - [x] Migrations
 - [ ] Debug em python
-- [ ] SQL Transactions
+- [x] SQL Transactions
+Preciso colocar a create endereco e estabelecimento na mesma transacao
 - [ ] Tabela espelho (para criar histórico de informações)
 
 
