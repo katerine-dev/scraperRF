@@ -6,6 +6,8 @@ import os
 import csv
 import tempfile
 
+from scraper.request import webscraping
+
 nome_situacao_cadastral = {  # dicionário para referenciar o nome da situação cadastral no código informado pela tabela
     "01": "NULA",
     "02": "ATIVA",
@@ -18,7 +20,7 @@ nome_situacao_cadastral = {  # dicionário para referenciar o nome da situação
 
 def process_csv(csv_path, conexao):
     print("Incluindo informações no Banco de Dados... aguarde!")
-    with open(csv_path, 'r', encoding='ISO-8859-1') as csv_file:
+    with open(csv_path, 'r', encoding = file.get_encoding(csv_path)) as csv_file:
         reader = csv.reader((row.replace('\0', '') for row in csv_file), delimiter=";") # trocar o byte Nul por '' dentro de um valor do dicionário
         for row in reader:
             dict_estabelecimento = {
@@ -56,7 +58,7 @@ def process_csv(csv_path, conexao):
             }
             #file.remove_null_bytes(dict_estabelecimento)  # Corrige line contains NUL
             #file.remove_null_bytes(dict_estabelecimento["endereco"])
-            with conexao.transactions():
+            with conexao.transaction():
                 dict_estabelecimento["id_endereco"] = db.endereco.create_endereco(dict_estabelecimento["endereco"], cur)
                 # raise Exception("Erro forçado!") # Verificando se realmente tem rollback
                 db.estabelecimento.create_estabelecimento(dict_estabelecimento, cur)
@@ -64,15 +66,20 @@ def process_csv(csv_path, conexao):
 
 conexao = db.conexao.conectar_banco()
 cur = conexao.cursor()
-# Faça o que precisa com o cursor e a conexão
-zip_file = file.fetch_file("https://dadosabertos.rfb.gov.br/CNPJ/Estabelecimentos8.zip")
-temp_dir = tempfile.TemporaryDirectory()  # criando uma pasta temporária
-file.extract_zipfile(zip_file, temp_dir.name)  # extraindo para um diretório temporátio
-zip_file.close()  # ao fechar um arquivo temporário ele é automaticamente deletado
+print("Feito a conexão")
+temp_dir = tempfile.TemporaryDirectory()
 
-csv_name = os.listdir(temp_dir.name)[0]  # pegando o nome do csv
-csv_path = os.path.join(temp_dir.name, csv_name)  # invés de concatenar strings, vou usar o path.join
+links_receita_federal = webscraping.baixa_links_receita()
+estabelecimentos_urls = list(filter(lambda url: "Estabelecimentos" in url, links_receita_federal))  # Identificar os estabelecimentos
+print(estabelecimentos_urls)
+for url in estabelecimentos_urls:  # Para cada link de estabelecimento:
+    zip_file = file.fetch_file(url)  # criando uma pasta temporária
+    file.extract_zipfile(zip_file, temp_dir.name)  # extraindo para um diretório temporátio
+    zip_file.close()  # ao fechar um arquivo temporário ele é automaticamente deletado
+    print("Extraído os arquivos")
+    csv_name = os.listdir(temp_dir.name)[0]  # pegando o nome do csv
+    csv_path = os.path.join(temp_dir.name, csv_name)  # invés de concatenar strings, vou usar o path.join
 
-process_csv(csv_path, conexao)
-conexao.commit()
-temp_dir.cleanup()  # limpa o diretorio temporario e apaga todos os csvs
+    process_csv(csv_path, conexao)
+    conexao.commit()
+    temp_dir.cleanup()  # limpa o diretorio temporario e apaga todos os csvs

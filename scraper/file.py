@@ -20,19 +20,10 @@ def extract_zipfile(file, destination_path):
 
 def get_encoding(file_path):
     with open(file_path, 'rb') as f:  # Abre o arquivos especificado em modo binária
-        lines = f.readlines()[:250]  # Lê as primeras 100 linhas do arquivo, (por que?)
+        lines = f.readlines()[:250]  # Lê as primeras 100 linhas do arquivo
         encoding = chardet.detect(b''.join(lines))['encoding']  # Detecta o encoding do arquivo
         print("encoding detectado:", encoding)
-        return encoding  # precisa chamar ela ainda
-
-
-def baixar_temporariamente(zip_urls):
-    for zip_url in zip_urls:
-        zip_file = fetch_file(zip_url)
-        temp_dir = tempfile.TemporaryDirectory()
-        extract_zipfile(zip_file, temp_dir.name)
-        print(f"Arquivo .zip da URL '{zip_url}' baixado e extraído com sucesso")
-        zip_file.close()
+        return encoding
 
 # Função responsável por trocar o byte Nul por '' dentro de um valor do dicionário dict_endereco
 # Não precisou pq eu inclui a solução diretamente no reader

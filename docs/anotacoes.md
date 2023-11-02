@@ -108,6 +108,10 @@ Um grupo de comandos que alteram os dados armazenados em um banco de dados e uma
 tratada como uma única unidade, portanto esta transação basicamente garante que todos esses comandos sejam executados 
 com sucesso ou nenhum deles. Elas garantem a integridade do banco de dados. 
 
+## Cloud 
+
+Google cloud, Azure, AWS. 
+
 ### TODO
 - [x] Fazer estrutura de banco de dados
 - [x] Criar um ambiente virtual env
